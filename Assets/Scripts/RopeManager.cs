@@ -26,17 +26,21 @@ public class RopeManager : MonoBehaviour
 
     private int AddNode(Vector2 pos, float mass, bool isFixed)
     {
-        int corner1 = AddNode(new Vector2(0, 0), 1, false);
-        int corner2 = AddNode(new Vector2(1, 0), 1, false);
-        int corner3 = AddNode(new Vector2(1, 1), 1, false);
-        int corner4 = AddNode(new Vector2(0, 1), 1, false);
+        //int corner1 = AddNode(new Vector2(0, 0), 1, false);
+        //int corner2 = AddNode(new Vector2(1, 0), 1, false);
+        //int corner3 = AddNode(new Vector2(1, 1), 1, false);
+        //int corner4 = AddNode(new Vector2(0, 1), 1, false);
 
-        AddConstraint(corner1, corner2, 1.0f);
-        AddConstraint(corner2, corner3, 1.0f);
-        AddConstraint(corner3, corner4, 1.0f);
-        AddConstraint(corner4, corner1, 1.0f);
+        //AddConstraint(corner1, corner2, 1.0f);
+        //AddConstraint(corner2, corner3, 1.0f);
+        //AddConstraint(corner3, corner4, 1.0f);
+        //AddConstraint(corner4, corner1, 1.0f);
 
-        return corner1;
+        //return corner1;
+
+        int newNode = AddNode(new Vector2(0, 0), 1, false);
+
+        return newNode;
     }
 
     private void AddConstraint(int node1, int node2, float desired, float compensate1 = 0.5f, float compensate2 = 0.5f)
