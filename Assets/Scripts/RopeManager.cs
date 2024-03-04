@@ -1,28 +1,41 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics.Contracts;
 using UnityEngine;
 
-
+[System.Serializable]
 public class Node
 {
-    public VerletState state;
-    public float mass;
+    public Vector2 pos, prevPos;
     public bool isFixed;
 }
 
+[System.Serializable]
 public class Constraint
 {
-    public int node1;
-    public int node2;
-    public float compensate1;
-    public float compensate2;
-    public float desiredDistance;
+    public Node firstNode, secondNode;
+    public float compensateOne, compensateTwo, spacing;
 }
 
 public class RopeManager : MonoBehaviour
 {
     public List<Node> nodes = new List<Node>();
     public List<Constraint> constraints = new List<Constraint>();
+
+
+    private void Start()
+    {
+        if (nodes == null)
+            nodes = new List<Node>();
+
+        if (constraints == null)
+            constraints = new List<Constraint>();
+    }
+
+    private void Update()
+    {
+        Simulate();
+    }
 
     private int AddNode(Vector2 pos, float mass, bool isFixed)
     {
@@ -50,17 +63,36 @@ public class RopeManager : MonoBehaviour
 
     private void FixedUpdate()
     {
+
+    }
+
+    private void Simulate()
+    {
         foreach (Node node in nodes)
         {
-            Vector2 gravity = new Vector2(0, -9.81f);
+            if (!node.isFixed)
+            {
+                Vector2 posBeforeUpdate = node.pos;
 
-            node.state.addForce(gravity);
-            node.state.integrate();
+                node.pos += node.pos - node.prevPos;
+                node.pos += Vector2.down * 9.81f * Time.deltaTime * Time.deltaTime;
+                node.prevPos = posBeforeUpdate;
+            }
         }
 
         for (int i = 0; i < 10; i++)
         {
-            
+            foreach (Constraint constraint in constraints)
+            {
+                Vector2 constraintCenter = (constraint.firstNode.pos + constraint.secondNode.pos) / 2;
+                Vector2 constraintDir = (constraint.firstNode.pos + constraint.secondNode.pos).normalized;
+
+                if (!constraint.firstNode.isFixed)
+                    constraint.firstNode.pos = constraintCenter + constraintDir * constraint.spacing / 2;
+
+                if (!constraint.secondNode.isFixed)
+                    constraint.secondNode.pos = constraintCenter + constraintDir * constraint.spacing / 2;
+            }
         }
     }
 }
