@@ -52,7 +52,7 @@ public class NodeScript : MonoBehaviour
 		}
 	}
 
-	private void Update()
+	private void FixedUpdate()
 	{
 		// if this is the root node then tell the joints to update
 		foreach (BaseJoint joint in joints)
