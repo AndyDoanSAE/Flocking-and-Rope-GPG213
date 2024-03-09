@@ -44,6 +44,8 @@ public class RopeManager : MonoBehaviour
     [SerializeField] private float spacing;
     [SerializeField] private float gravity;
 
+    [SerializeField] private bool fixedOrigin;
+
     private LineRenderer lineRenderer;
 
     private void Start()
@@ -110,17 +112,6 @@ public class RopeManager : MonoBehaviour
 
             nodeOne.state.pos += translate;
             nodeTwo.state.pos -= translate;
-
-            //Node firstNode = nodes[0];
-            //Node lastNode = nodes[nodes.Length - 1];
-
-            //float distance = Vector2.Distance(firstNode.state.pos, lastNode.state.pos);
-
-            //if (distance > 0 && distance > nodes.Length * spacing)
-            //{
-            //    Vector2 dir = (lastNode.state.pos - firstNode.state.pos).normalized;
-            //    lastNode.state.pos = firstNode.state.pos + nodes.Length * spacing * dir;
-            //}
         }
     }
 
