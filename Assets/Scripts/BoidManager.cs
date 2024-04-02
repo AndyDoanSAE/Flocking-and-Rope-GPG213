@@ -24,6 +24,7 @@ public class BoidManager : MonoBehaviour
     public List<Boid> boids;
     public float      boidSpeed = 20.0f;
     public float      boidSightRange = 10.0f;
+    public float boidAvoidanceRange = 3.0f;
 
     [Header("Rules")]
     public bool  boidEnableSeparation = false;
@@ -168,6 +169,7 @@ public class BoidManager : MonoBehaviour
     {
         if(debugRanges)
             DrawCircle(p, range, Color.white);
+
         List<Boid> found = new List<Boid>();
         foreach(var b in boids)
         {
@@ -177,6 +179,27 @@ public class BoidManager : MonoBehaviour
                 if(debugNearby)
                     DrawArrow(p, b.pos, Color.green);
             }
+        }
+        return found;
+    }
+
+    public List<Boid> FindBoidsToAvoid(Boid self, Vector2 p,float avoidanceRange)
+    {
+        if (debugRanges)
+        {
+            DrawCircle(p, avoidanceRange, Color.red);
+        }
+        List<Boid> found = new List<Boid>();
+        foreach (var b in boids)
+        {
+            if (b!=self && Vector2.Distance(p, b.pos)<=avoidanceRange)
+            {
+                found.Add(b);
+                if (debugNearby)
+                {
+                    DrawArrow(p,b.pos, Color.red);
+                }
+            }   
         }
         return found;
     }

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class Boid : MonoBehaviour
 {
@@ -8,6 +9,16 @@ public class Boid : MonoBehaviour
     public Vector2 vel;
     public Vector2 pos;
     public Vector2 force;
+
+    float seperationStrength;
+    float cohesionStrength;
+    float alignmentStrength;
+
+    [SerializeField] bool enableAlignment;
+    [SerializeField] bool enableCohesion;
+    [SerializeField] bool enableSeperation;
+
+
 
     // Accumulate force
     // Every update the BoidManager uses the Boid's force then wipes it to zero
@@ -28,11 +39,44 @@ public class Boid : MonoBehaviour
     {
         // Find all nearby Boids
         var nearby = BoidManager.instance.FindBoidsInRange(this, pos, BoidManager.instance.boidSightRange);
+        var boidsToAvoid = BoidManager.instance.FindBoidsToAvoid(this, pos, BoidManager.instance.boidAvoidanceRange);
+
+        
+        seperationStrength = BoidManager.instance.boidStrengthSeparation;
+        cohesionStrength = BoidManager.instance.boidStrengthCohesion;
+        alignmentStrength = BoidManager.instance.boidStrengthAlignment;
+
+        enableAlignment = BoidManager.instance.boidEnableAlignment;
+        enableCohesion = BoidManager.instance.boidEnableCohesion;
+        enableSeperation = BoidManager.instance.boidEnableCohesion;
         // If there are nearby Boids
         if (nearby.Count > 0)
         {
             // Do flocking processing here
+            //Cohesion
+            if (enableCohesion)
+            {
+                //Add all points together and average
+                Vector2 cohesionMove = Vector2.zero;
+                foreach (var b in nearby)
+                {
+                    cohesionMove += (Vector2)b.transform.position;
+                }
+                cohesionMove /= nearby.Count;
+
+                //create offset from agent position
+                cohesionMove -= (Vector2)this.transform.position;
+                pos += cohesionMove;
+
+            }
+
+            //Seperation
+
+
+            //Alignment
+
         }
 
     }
+
 }
