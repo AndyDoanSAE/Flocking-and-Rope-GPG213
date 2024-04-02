@@ -48,7 +48,11 @@ public class Boid : MonoBehaviour
 
         enableAlignment = BoidManager.instance.boidEnableAlignment;
         enableCohesion = BoidManager.instance.boidEnableCohesion;
-        enableSeperation = BoidManager.instance.boidEnableCohesion;
+        enableSeperation = BoidManager.instance.boidEnableSeparation;
+
+        //steering
+
+
         // If there are nearby Boids
         if (nearby.Count > 0)
         {
@@ -69,11 +73,31 @@ public class Boid : MonoBehaviour
                 pos += cohesionMove;
 
             }
-
-            //Seperation
-
-
             //Alignment
+            if (enableAlignment)
+            {
+                //Add all points together and average
+                Vector2 alignmentMove = Vector2.zero;
+                foreach (var b in nearby)
+                {
+                    alignmentMove += (Vector2)b.transform.up;
+                }
+                alignmentMove /= nearby.Count;
+                AddForce(alignmentMove);
+            }
+            //Seperation
+            if (enableSeperation)
+            {
+                Vector2 seperationMove = Vector2.zero;
+                foreach (var b in boidsToAvoid)
+                {
+                    seperationMove += (Vector2)b.transform.position;
+                }
+                seperationMove /= boidsToAvoid.Count;
+                pos -= seperationMove;
+            }
+
+
 
         }
 
