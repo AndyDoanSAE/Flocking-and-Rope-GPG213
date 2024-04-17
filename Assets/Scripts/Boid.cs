@@ -67,7 +67,7 @@ public class Boid : MonoBehaviour
 
                 alignmentMove /= nearby.Count;
 
-                //Create steering by minusing current Vector
+                //Create steering by minusing current velocity
                 alignmentMove -= this.vel;
 
                 //Add alignment force to boid
@@ -98,22 +98,24 @@ public class Boid : MonoBehaviour
             //Seperation
             if (enableSeperation)
             {
-                /*
-                Vector2 difference = Vector2.zero;
-                float distance;
                 Vector2 seperationMove = Vector2.zero;
-                foreach (var b in boidsToAvoid)
+                foreach (var b in nearby)
                 {
-                    distance = Vector2.Distance(b.transform.position, this.pos);
-                    difference = (this.pos - (Vector2)b.transform.position);
-                    difference /= distance;
-                    seperationMove += difference;
+                    //float distance;
 
+                    float distance = Vector2.Distance(this.pos,b.transform.position);
+                    Vector2 difference = this.pos - (Vector2)b.transform.position;
+
+                    difference /= distance;
+
+                    seperationMove += difference;//(Vector2)b.transform.position;
                 }
                 seperationMove /= boidsToAvoid.Count;
 
+                seperationMove -= this.vel;
+
                 AddForce(seperationMove);
-                */
+                
             }
             
 
