@@ -244,7 +244,7 @@ MonoBehaviour:
   boidSpeed: 20
   boidSightRange: 10
   boidAvoidanceRange: 5
-  boidEnableSeparation: 0
+  boidEnableSeparation: 1
   boidEnableCohesion: 0
   boidEnableAlignment: 0
   boidStrengthSeparation: 1
