@@ -50,31 +50,11 @@ public class Boid : MonoBehaviour
         enableCohesion = BoidManager.instance.boidEnableCohesion;
         enableSeperation = BoidManager.instance.boidEnableSeparation;
 
-        //steering
-
-
         // If there are nearby Boids
         if (nearby.Count > 0)
         {
             // Do flocking processing here
-            //Cohesion
-            if (enableCohesion)
-            {
-                /*
-                //Add all points together and average
-                Vector2 cohesionMove = Vector2.zero;
-                foreach (var b in nearby)
-                {
-                    cohesionMove += (Vector2)b.transform.position;
-                }
-                cohesionMove /= nearby.Count;
 
-                //create offset from agent position
-                cohesionMove -= (Vector2)this.transform.position;
-                vel += cohesionMove;
-                */
-            }
-            
             //Alignment
             if (enableAlignment)
             {
@@ -84,27 +64,58 @@ public class Boid : MonoBehaviour
                 {
                     alignmentMove += (Vector2)b.transform.position;
                 }
+
                 alignmentMove /= nearby.Count;
 
                 //Create steering by minusing current Vector
-                alignmentMove -= (this.vel);
+                alignmentMove -= this.vel;
 
                 //Add alignment force to boid
-                AddForce( alignmentMove);
+                AddForce(alignmentMove);
             }
-            /*
+
+            //Cohesion
+            if (enableCohesion)
+            {
+                
+                //Add all points together and average
+                Vector2 cohesionMove = Vector2.zero;
+                foreach (var b in nearby)
+                {
+                    cohesionMove += (Vector2)b.transform.position;
+                }
+                cohesionMove /= nearby.Count;
+
+                //Create steering by minusing current position
+                cohesionMove -= this.pos;
+                cohesionMove -= this.vel;
+
+                AddForce(cohesionMove);
+                
+            }
+
+            
             //Seperation
             if (enableSeperation)
             {
+                /*
+                Vector2 difference = Vector2.zero;
+                float distance;
                 Vector2 seperationMove = Vector2.zero;
                 foreach (var b in boidsToAvoid)
                 {
-                    seperationMove += (Vector2)b.transform.position;
+                    distance = Vector2.Distance(b.transform.position, this.pos);
+                    difference = (this.pos - (Vector2)b.transform.position);
+                    difference /= distance;
+                    seperationMove += difference;
+
                 }
                 seperationMove /= boidsToAvoid.Count;
-                pos -= seperationMove;
+
+                AddForce(seperationMove);
+                */
             }
-            */
+            
 
 
 

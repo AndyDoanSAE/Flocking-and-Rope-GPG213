@@ -243,14 +243,14 @@ MonoBehaviour:
   boids: []
   boidSpeed: 20
   boidSightRange: 10
-  boidAvoidanceRange: 3
+  boidAvoidanceRange: 5
   boidEnableSeparation: 0
   boidEnableCohesion: 0
-  boidEnableAlignment: 1
+  boidEnableAlignment: 0
   boidStrengthSeparation: 1
   boidStrengthCohesion: 1
   boidStrengthAlignment: 1
-  debugRanges: 0
+  debugRanges: 1
   debugNearby: 0
   debugSelected: 0
 --- !u!4 &461358126
