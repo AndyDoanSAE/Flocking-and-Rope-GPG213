@@ -183,6 +183,7 @@ public class BoidManager : MonoBehaviour
         return found;
     }
 
+    // Find all boids in avoidance range
     public List<Boid> FindBoidsToAvoid(Boid self, Vector2 p,float avoidanceRange)
     {
         if (debugRanges)

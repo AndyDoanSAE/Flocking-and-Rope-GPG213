@@ -60,6 +60,7 @@ public class Boid : MonoBehaviour
             //Cohesion
             if (enableCohesion)
             {
+                /*
                 //Add all points together and average
                 Vector2 cohesionMove = Vector2.zero;
                 foreach (var b in nearby)
@@ -70,9 +71,10 @@ public class Boid : MonoBehaviour
 
                 //create offset from agent position
                 cohesionMove -= (Vector2)this.transform.position;
-                pos += cohesionMove;
-
+                vel += cohesionMove;
+                */
             }
+            
             //Alignment
             if (enableAlignment)
             {
@@ -80,11 +82,17 @@ public class Boid : MonoBehaviour
                 Vector2 alignmentMove = Vector2.zero;
                 foreach (var b in nearby)
                 {
-                    alignmentMove += (Vector2)b.transform.up;
+                    alignmentMove += (Vector2)b.transform.position;
                 }
                 alignmentMove /= nearby.Count;
-                AddForce(alignmentMove);
+
+                //Create steering by minusing current Vector
+                alignmentMove -= (this.vel);
+
+                //Add alignment force to boid
+                AddForce( alignmentMove);
             }
+            /*
             //Seperation
             if (enableSeperation)
             {
@@ -96,6 +104,7 @@ public class Boid : MonoBehaviour
                 seperationMove /= boidsToAvoid.Count;
                 pos -= seperationMove;
             }
+            */
 
 
 
