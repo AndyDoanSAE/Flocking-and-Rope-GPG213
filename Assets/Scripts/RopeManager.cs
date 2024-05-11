@@ -13,31 +13,9 @@ public class Node
     }
 }
 
-//public class Constraint
-//{
-//    public Node nodeOne;
-//    public Node nodeTwo
-//    {
-//        get
-//        {
-//            return nodeTwo;
-//        }
-//        set
-//        {
-//            if (nodeTwo == null)
-//            {
-//                nodeOne = value;
-//            }
-//        }
-//    }
-//    public float distance;
-//}
-
 public class RopeManager : MonoBehaviour
 {
-    [SerializeField] private Node[] nodes;
-
-    //[SerializeField] private Constraint constraint;
+    [SerializeField] private Node[] _nodes;
 
     [SerializeField] private int cycles;
     [SerializeField] private int numOfNodes;
@@ -46,57 +24,64 @@ public class RopeManager : MonoBehaviour
 
     [SerializeField] private bool fixedOrigin;
 
-    private LineRenderer lineRenderer;
+    private LineRenderer _lineRenderer;
 
     private void Start()
     {
-        if (lineRenderer == null)
-            lineRenderer = GetComponent<LineRenderer>();
+        // Get the line renderer component
+        if (_lineRenderer == null)
+            _lineRenderer = GetComponent<LineRenderer>();
 
-        nodes = new Node[numOfNodes];
-
+        // Create the nodes
+        _nodes = new Node[numOfNodes];
+        
+        // Set the line renderer's position
         Vector2 pos = transform.position;
-
         for (int i = 0; i < numOfNodes; i++)
         {
-            nodes[i] = new Node(pos);
+            _nodes[i] = new Node(pos);
 
             pos.y -= spacing;
         }
 
-        lineRenderer.positionCount = nodes.Length;
+        _lineRenderer.positionCount = _nodes.Length;
     }
 
     private void FixedUpdate()
     {
         Simulate();
-
+        
         for (int i = 0; i < cycles; i++)
         {
             ApplyConstraints();
         }
     }
 
+    // Simulate the rope
     private void Simulate()
     {
-        for (int i = 0; i < nodes.Length; i++)
+        // add force to each node
+        for (int i = 0; i < _nodes.Length; i++)
         {
-            Node currentNode = nodes[i];
+            Node currentNode = _nodes[i];
 
             currentNode.state.addForce(gravity * Vector2.down);
             currentNode.state.integrate();
 
-            lineRenderer.SetPosition(i, currentNode.state.pos);
+            _lineRenderer.SetPosition(i, currentNode.state.pos);
         }
     }
 
+    // Apply constraints to the rope
     private void ApplyConstraints()
     {
-        for (int i = 0; i < nodes.Length - 1; i++)
+        
+        for (int i = 0; i < _nodes.Length - 1; i++)
         {
-            Node nodeOne = nodes[i];
-            Node nodeTwo = nodes[i + 1];
+            Node nodeOne = _nodes[i];
+            Node nodeTwo = _nodes[i + 1];
 
+            // if this is the first node and the mouse is pressed
             if (i == 0 && Input.GetMouseButton(0))
                 nodeOne.state.pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
@@ -122,7 +107,7 @@ public class RopeManager : MonoBehaviour
             return;
         }
 
-        for (int i = 0; i < nodes.Length - 1; i++)
+        for (int i = 0; i < _nodes.Length - 1; i++)
         {
             if (i % 2 == 0)
             {
@@ -133,7 +118,7 @@ public class RopeManager : MonoBehaviour
                 Gizmos.color = Color.white;
             }
 
-            Gizmos.DrawLine(nodes[i].state.pos, nodes[i + 1].state.pos);
+            Gizmos.DrawLine(_nodes[i].state.pos, _nodes[i + 1].state.pos);
         }
     }
 }
