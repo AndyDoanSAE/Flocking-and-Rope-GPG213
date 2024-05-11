@@ -5,11 +5,11 @@ This is a testbed implementation simulating AI flocking behaviour and rope physi
 
 ## Table of Contents
 
-- [Requirements](https://github.com/AndyDoanSAE/Flocking-and-Rope-GPG213/#requirements)
-- [Installation](https://github.com/AndyDoanSAE/Flocking-and-Rope-GPG213/#installation)
-- [Flocking Guide](https://github.com/AndyDoanSAE/Flocking-and-Rope-GPG213/#flocking-guide)
-- [Rope Guide](https://github.com/AndyDoanSAE/Flocking-and-Rope-GPG213/#rope-guide)
-- [Maintainers](https://github.com/AndyDoanSAE/Flocking-and-Rope-GPG213/#maintainers)
+- [Requirements](https://github.com/AndyDoanSAE/Flocking-and-Rope-GPG213/?tab=readme-ov-file#requirements)
+- [Installation](https://github.com/AndyDoanSAE/Flocking-and-Rope-GPG213/?tab=readme-ov-file#installation)
+- [Flocking Guide](https://github.com/AndyDoanSAE/Flocking-and-Rope-GPG213/?tab=readme-ov-file#flocking-guide)
+- [Rope Guide](https://github.com/AndyDoanSAE/Flocking-and-Rope-GPG213/?tab=readme-ov-file#rope-guide)
+- [Maintainers](https://github.com/AndyDoanSAE/Flocking-and-Rope-GPG213/?tab=readme-ov-file#maintainers)
 
 
 ## Requirements
