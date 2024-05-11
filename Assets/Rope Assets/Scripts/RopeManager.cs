@@ -17,10 +17,14 @@ public class RopeManager : MonoBehaviour
 {
     [SerializeField] private Node[] _nodes;
 
-    [SerializeField] private int cycles;
-    [SerializeField] private int numOfNodes;
-    [SerializeField] private float spacing;
-    [SerializeField] private float gravity;
+    [SerializeField, Tooltip("Number of times to simulate the rope")] 
+    private int cycles; 
+    [SerializeField, Tooltip("Number of nodes the rope has")] 
+    private int numOfNodes;
+    [SerializeField, Tooltip("Spacing between nodes")] 
+    private float spacing;
+    [SerializeField, Tooltip("Gravity force")] 
+    private float gravity;
 
     [SerializeField] private bool fixedOrigin;
 
@@ -84,6 +88,9 @@ public class RopeManager : MonoBehaviour
             // if this is the first node and the mouse is pressed
             if (i == 0 && Input.GetMouseButton(0))
                 nodeOne.state.pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            // if this is the first node and the origin is fixed
+            else if (i == 0 && fixedOrigin)
+                nodeOne.state.pos = nodeOne.state.prevPos;
 
             float nodeDistance = Vector2.Distance(nodeOne.state.pos, nodeTwo.state.pos);
             float diffX = nodeOne.state.pos.x - nodeTwo.state.pos.x;
