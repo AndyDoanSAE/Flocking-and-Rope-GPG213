@@ -25,8 +25,8 @@ public class RopeManager : MonoBehaviour
     private float spacing;
     [SerializeField, Tooltip("Gravity force")] 
     private float gravity;
-
-    [SerializeField] private bool fixedOrigin;
+    [SerializeField, Tooltip("Fixes the origin point of the rope")] 
+    private bool fixedOrigin;
 
     private LineRenderer _lineRenderer;
 
