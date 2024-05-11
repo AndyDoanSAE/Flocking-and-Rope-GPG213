@@ -24,14 +24,17 @@ public class BoidManager : MonoBehaviour
     public List<Boid> boids;
     public float      boidSpeed = 20.0f;
     public float      boidSightRange = 10.0f;
-    public float boidAvoidanceRange = 3.0f;
 
     [Header("Rules")]
     public bool  boidEnableSeparation = false;
     public bool  boidEnableCohesion = false;
     public bool  boidEnableAlignment = false;
+    
+    [Range(0f, 100f)]
     public float boidStrengthSeparation = 1.0f;
+    [Range(0f, 100f)]
     public float boidStrengthCohesion = 1.0f;
+    [Range(0f, 100f)]
     public float boidStrengthAlignment = 1.0f;
 
     [Header("Debug")]
@@ -45,14 +48,8 @@ public class BoidManager : MonoBehaviour
         instance = this;
     }
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
     // Update is called once per frame
-    void FixedUpdate()
+    private void FixedUpdate()
     {
         // Draw the world boundaries
         Debug.DrawLine(new Vector3(0, 0, 0), new Vector3(worldSize.x, 0, 0), Color.red);
@@ -90,7 +87,7 @@ public class BoidManager : MonoBehaviour
         // Process each boid
         foreach (var b in boids)
         {
-            // EUler integration
+            // Euler integration
             b.vel += b.force * Time.fixedDeltaTime;
             b.pos += b.vel * Time.fixedDeltaTime;
             b.force = Vector2.zero;
@@ -179,28 +176,6 @@ public class BoidManager : MonoBehaviour
                 if(debugNearby)
                     DrawArrow(p, b.pos, Color.green);
             }
-        }
-        return found;
-    }
-
-    // Find all boids in avoidance range
-    public List<Boid> FindBoidsToAvoid(Boid self, Vector2 p,float avoidanceRange)
-    {
-        if (debugRanges)
-        {
-            DrawCircle(p, avoidanceRange, Color.red);
-        }
-        List<Boid> found = new List<Boid>();
-        foreach (var b in boids)
-        {
-            if (b!=self && Vector2.Distance(p, b.pos)<=avoidanceRange)
-            {
-                found.Add(b);
-                if (debugNearby)
-                {
-                    DrawArrow(p,b.pos, Color.red);
-                }
-            }   
         }
         return found;
     }

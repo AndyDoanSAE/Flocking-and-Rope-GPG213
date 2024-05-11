@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChatHistory">
+    <chats>
+      <list>
+        <chat>
+          <internalId value="f12ebcbd-c23c-431b-880b-69194df339f3" />
+          <llm>
+            <llm>
+              <model value="anthropic/claude-3-sonnet-20240229" />
+              <provider value="Anthropic" />
+              <title value="Claude 3 Sonnet" />
+            </llm>
+          </llm>
+        </chat>
+        <chat>
+          <accountId value="VXNlcjozODIyODE=" />
+          <internalId value="c218e834-b599-4fbb-8278-96e18934ac84" />
+          <llm>
+            <llm>
+              <model value="anthropic/claude-3-sonnet-20240229" />
+              <provider value="Anthropic" />
+              <title value="Claude 3 Sonnet" />
+            </llm>
+          </llm>
+        </chat>
+        <chat>
+          <accountId value="VXNlcjozODIyODE=" />
+          <internalId value="be9870c6-ae2f-43ef-a2e2-019fecc811c3" />
+          <llm>
+            <llm>
+              <model value="anthropic/claude-3-sonnet-20240229" />
+              <provider value="Anthropic" />
+              <title value="Claude 3 Sonnet" />
+            </llm>
+          </llm>
+          <messages>
+            <list>
+              <message>
+                <speaker value="HUMAN" />
+                <text value="How would you convert a setMag() from javascript to C#?" />
+              </message>
+              <message>
+                <speaker value="ASSISTANT" />
+                <text value="In C#, you can use the `Vector3.Normalize` method to normalize a vector, and then multiply it by the desired magnitude to set its magnitude. Here's an example:&#10;&#10;```csharp&#10;using UnityEngine;&#10;&#10;public class ExampleScript : MonoBehaviour&#10;{&#10;    public Vector3 myVector = new Vector3(1, 2, 3);&#10;    public float desiredMagnitude = 5f;&#10;&#10;    void Start()&#10;    {&#10;        SetMagnitude(ref myVector, desiredMagnitude);&#10;        Debug.Log(&quot;New vector magnitude: &quot; + myVector.magnitude);&#10;    }&#10;&#10;    void SetMagnitude(ref Vector3 vector, float magnitude)&#10;    {&#10;        vector = vector.normalized * magnitude;&#10;    }&#10;}&#10;```&#10;&#10;In this example, the `SetMagnitude` method takes a `Vector3` by reference and a desired magnitude. It first normalizes the vector using `vector.normalized`, which sets its magnitude to 1 while preserving its direction. Then, it multiplies the normalized vector by the desired magnitude to set the new magnitude.&#10;&#10;In the `Start` method, we call `SetMagnitude` with our initial `myVector` and the `desiredMagnitude`, which updates the `myVector` to have the desired magnitude.&#10;&#10;Note that we're passing the `myVector` by reference to the `SetMagnitude` method using the `ref` keyword. This allows the method to modify the original vector, rather than working on a copy." />
+              </message>
+            </list>
+          </messages>
+          <updatedAt value="2024-05-11T21:14:33.2704895" />
+        </chat>
+      </list>
+    </chats>
+    <defaultLlm>
+      <llm>
+        <model value="anthropic/claude-3-sonnet-20240229" />
+        <provider value="Anthropic" />
+        <title value="Claude 3 Sonnet" />
+      </llm>
+    </defaultLlm>
+  </component>
+</project>

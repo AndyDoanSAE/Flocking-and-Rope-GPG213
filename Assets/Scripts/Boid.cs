@@ -9,120 +9,98 @@ public class Boid : MonoBehaviour
     public Vector2 vel;
     public Vector2 pos;
     public Vector2 force;
-
-    float seperationStrength;
-    float cohesionStrength;
-    float alignmentStrength;
-
-    [SerializeField] bool enableAlignment;
-    [SerializeField] bool enableCohesion;
-    [SerializeField] bool enableSeperation;
-
-
-
+    
     // Accumulate force
     // Every update the BoidManager uses the Boid's force then wipes it to zero
-    public void AddForce(Vector2 f)
+    private void AddForce(Vector2 f)
     {
         force += f;
     }
 
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         // Store the Boid's transform position into it's pos
         pos = transform.position;
     }
 
     // Update is called once per frame
-    void FixedUpdate()
+    private void FixedUpdate()
     {
         // Find all nearby Boids
         var nearby = BoidManager.instance.FindBoidsInRange(this, pos, BoidManager.instance.boidSightRange);
-        var boidsToAvoid = BoidManager.instance.FindBoidsToAvoid(this, pos, BoidManager.instance.boidAvoidanceRange);
 
+        Vector2 steering = Vector2.zero;
         
-        seperationStrength = BoidManager.instance.boidStrengthSeparation;
-        cohesionStrength = BoidManager.instance.boidStrengthCohesion;
-        alignmentStrength = BoidManager.instance.boidStrengthAlignment;
-
-        enableAlignment = BoidManager.instance.boidEnableAlignment;
-        enableCohesion = BoidManager.instance.boidEnableCohesion;
-        enableSeperation = BoidManager.instance.boidEnableSeparation;
+        float speed = BoidManager.instance.boidSpeed;
+        
+        float separationStrength = BoidManager.instance.boidStrengthSeparation;
+        float cohesionStrength = BoidManager.instance.boidStrengthCohesion;
+        float alignmentStrength = BoidManager.instance.boidStrengthAlignment;
+        
+        bool enableAlignment = BoidManager.instance.boidEnableAlignment;
+        bool enableCohesion = BoidManager.instance.boidEnableCohesion;
+        bool enableSeparation = BoidManager.instance.boidEnableSeparation;
 
         // If there are nearby Boids
         if (nearby.Count > 0)
         {
             // Do flocking processing here
 
-            //Alignment
+            // Alignment
             if (enableAlignment)
             {
-                //Add all points together and average
-                Vector2 alignmentMove = Vector2.zero;
+                // Find the average velocity of nearby Boids
                 foreach (var b in nearby)
                 {
-                    alignmentMove += (Vector2)b.transform.position;
+                    steering += b.vel;
                 }
-
-                alignmentMove /= nearby.Count;
-
-                //Create steering by minusing current velocity
-                alignmentMove -= this.vel;
-
-                //Add alignment force to boid
-                AddForce(alignmentMove);
+                
+                steering /= nearby.Count;                                           // Average velocity
+                steering = steering.normalized * speed;                             // Normalized average velocity
+                steering -= this.vel;                                               // Steering vector
+                steering = Vector2.ClampMagnitude(steering, alignmentStrength);     // Limit to maximum steering force
+                
+                AddForce(steering);                                                 // Apply steering force
             }
 
-            //Cohesion
+            // Cohesion
             if (enableCohesion)
             {
-                
-                //Add all points together and average
-                Vector2 cohesionMove = Vector2.zero;
+                // Find the average position of nearby Boids
                 foreach (var b in nearby)
                 {
-                    cohesionMove += (Vector2)b.transform.position;
+                    steering += b.pos;
                 }
-                cohesionMove /= nearby.Count;
-
-                //Create steering by minusing current position
-                cohesionMove -= this.pos;
-                cohesionMove -= this.vel;
-
-                AddForce(cohesionMove);
                 
+                steering /= nearby.Count;                                           // Average position
+                steering -= this.pos;                                               // Steering vector
+                steering = steering.normalized * speed;                             // Normalized average position
+                steering -= this.vel;                                               // Steering vector
+                steering = Vector2.ClampMagnitude(steering, cohesionStrength);      // Limit to maximum steering force
+                
+                AddForce(steering);                                                 // Apply steering force
             }
 
             
-            //Seperation
-            if (enableSeperation)
+            // Separation
+            if (enableSeparation)
             {
-                Vector2 seperationMove = Vector2.zero;
+                // Find the average distance between this Boid and nearby Boids
                 foreach (var b in nearby)
                 {
-                    //float distance;
-
-                    float distance = Vector2.Distance(this.pos,b.transform.position);
-                    Vector2 difference = this.pos - (Vector2)b.transform.position;
-
-                    difference /= distance;
-
-                    seperationMove += difference;//(Vector2)b.transform.position;
+                    Vector2 difference = this.pos - b.pos;
+                    difference /= Vector2.Distance(this.pos, b.pos);
+                    steering += difference;
                 }
-                seperationMove /= boidsToAvoid.Count;
-
-                seperationMove -= this.vel;
-
-                AddForce(seperationMove);
                 
+                steering /= nearby.Count;                                           // Average distance
+                steering = steering.normalized * speed;                             // Normalized average distance
+                steering -= this.vel;                                               // Steering vector
+                steering = Vector2.ClampMagnitude(steering, separationStrength);    // Limit to maximum steering force
+                
+                AddForce(steering);                                                 // Apply steering force
             }
-            
-
-
-
         }
-
     }
-
 }
