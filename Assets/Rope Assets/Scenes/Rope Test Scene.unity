@@ -249,7 +249,7 @@ MonoBehaviour:
   numOfNodes: 40
   spacing: 0.1
   gravity: 20
-  fixedOrigin: 0
+  fixedOrigin: 1
 --- !u!4 &2017767626
 Transform:
   m_ObjectHideFlags: 0

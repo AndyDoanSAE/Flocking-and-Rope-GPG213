@@ -246,9 +246,9 @@ MonoBehaviour:
   boidEnableSeparation: 0
   boidEnableCohesion: 0
   boidEnableAlignment: 0
-  boidStrengthSeparation: 1
-  boidStrengthCohesion: 1
-  boidStrengthAlignment: 1
+  boidStrengthSeparation: 10
+  boidStrengthCohesion: 10
+  boidStrengthAlignment: 10
   debugRanges: 0
   debugNearby: 1
   debugSelected: 0
