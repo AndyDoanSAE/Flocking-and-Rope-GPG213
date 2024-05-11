@@ -40,7 +40,6 @@ public class BoidManager : MonoBehaviour
     [Header("Debug")]
     public bool debugRanges = false;
     public bool debugNearby = false;
-    public bool debugSelected = false;
 
     private void Awake()
     {
