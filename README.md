@@ -42,7 +42,7 @@ This project requires Unity Editor version 2022.3.16f1.
 
 > **Boid Enable Separation** - Toggles separation behaviour
 
-> **Boid Enable Cohesiion** - Toggles cohesion behaviour
+> **Boid Enable Cohesion** - Toggles cohesion behaviour
 
 > **Boid Enable Alignment** - Toggles alignment behaviour
 
